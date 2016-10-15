@@ -4,10 +4,11 @@ library(sqldf)
 ##filter only the relevant dates into df dataframe
 df<-sqldf("select * from file where Date='1/2/2007'OR Date='2/2/2007'")
 
-##Plot 1
-df$Global_active_power<-as.numeric(df$Global_active_power)
-png(filename="plot1.png")
-hist(df$Global_active_power,col="red",xlab="Global Active Power (kilowatts)",main="Global Active Power")
+##Plot 2
+png(filename="plot2.png")
 
-#Close device
+df[["Full_Time"]]<-strptime(paste(df$Date,df$Time),"%d/%m/%Y %H:%M")  ##Merge Date and Time into 1 Time variable
+plot(df$Full_Time,df$Global_active_power,type="l")
+
+#Close Device
 dev.off()
